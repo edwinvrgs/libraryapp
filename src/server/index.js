@@ -25,8 +25,6 @@ const serverConfig = {
   lazy: false,
   headers: {
     'Access-Control-Allow-Origin': '*',
-    origin: 'https://www.goodreads.com',
-    referer: 'https://www.goodreads.com',
   },
   historyApiFallback: true,
   stats: { colors: true }

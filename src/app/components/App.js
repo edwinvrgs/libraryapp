@@ -6,8 +6,7 @@ import parser from 'xmltojson';
 const instance = axios.create({
   baseURL: 'https://www.goodreads.com',
   headers: {
-    accept: 'application/xml',
-    'X-Requested-With': 'XMLHttpRequest'
+    accept: 'application/xml'
   }
 });
 
@@ -15,7 +14,7 @@ class App extends PureComponent {
   componentWillMount() {
     instance.get(endpoints.search, {
       params: {
-        q: 'Harry Potter',
+        q: 'Harry Potter 2',
         search: 'title',
       }
     })
