@@ -1,2 +1,4 @@
 export const GET_NAME = 'GET_NAME';
 export const GET_TOP_20 = 'GET_TOP_20';
+export const GET_SEARCH_RESULTS = 'GET_SEARCH_RESULTS';
+export const EMPTY_SEARCH_RESULTS = 'EMPTY_SEARCH_RESULTS';

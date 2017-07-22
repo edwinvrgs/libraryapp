@@ -41,8 +41,6 @@ app.use(webpackDevMiddleware(compiler, serverConfig))
 app.use(webpackHotMiddleware(compiler))
 app.use(express.static('build'))
 
-// app.get('*', (req, res) => res.sendFile(path.join(__dirname + '/../client/index.html')))
-
 //SSR Start :)
 app.use(handleRender);
 
@@ -64,6 +62,10 @@ function handleRender(req, res) {
 
       const preloadedState = store.getState();
       res.send(renderFullPage(html, preloadedState));
+    })
+    .catch((error) => {
+      assert.isNotOk(error,'Promise error');
+      done();
     });
 }
 function renderFullPage(html, preloadedState) {

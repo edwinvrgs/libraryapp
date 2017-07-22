@@ -8,11 +8,26 @@ export function getMostPopular() {
   };
 }
 
+export function searchMovies(params) {
+  return dispatch => {
+    endpoints.searchMovies(params)
+      .then(res => dispatch({ type: A.GET_SEARCH_RESULTS, payload: res }));
+  };
+}
+
+export function removeSearchResuts() {
+  return {
+    type: A.EMPTY_SEARCH_RESULTS
+  }
+}
+
 export function fetchPopular() {
   return endpoints.getPopular()
 }
 
 export default {
-  getMostPopular,
   fetchPopular,
+  searchMovies,
+  getMostPopular,
+  removeSearchResuts,
 };
