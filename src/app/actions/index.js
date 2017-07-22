@@ -1,1 +1,0 @@
-export nameActions from './nameActions'

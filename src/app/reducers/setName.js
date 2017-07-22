@@ -1,5 +1,5 @@
 import * as CST from '../constants';
-import initialState from '../store/initialState';
+import initialState from '../initialState';
 import R from 'ramda';
 
 export default function setName(state = initialState, { type, payload }) {

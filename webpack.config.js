@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -41,9 +40,14 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
-          "stylus-loader",
-          "postcss-loader",
-        ]
+          {
+            loader: "stylus-loader",
+            options: {
+              use: [require('nib')()],
+              import: ['~nib/lib/nib/index.styl']
+            },
+          },
+        ],
       },
     ],
   },
@@ -53,10 +57,5 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/client/index.html',
-      filename: 'index.html',
-      inject: 'body'
-    }),
   ],
 }
