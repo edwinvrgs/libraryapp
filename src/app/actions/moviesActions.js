@@ -4,14 +4,16 @@ import * as A from '../constants';
 export function getMostPopular() {
   return dispatch => {
     endpoints.getPopular()
-      .then(res => dispatch({ type: A.GET_TOP_20, payload: res }));
+      .then((res) => dispatch({ type: A.GET_TOP_20, payload: res }))
+      .catch((err) => console.log('getMostPopular error: ', err));
   };
 }
 
 export function searchMovies(params) {
   return dispatch => {
     endpoints.searchMovies(params)
-      .then(res => dispatch({ type: A.GET_SEARCH_RESULTS, payload: res }));
+      .then((res) => dispatch({ type: A.GET_SEARCH_RESULTS, payload: res }))
+      .catch((err) => console.log('searchMovies error: ', err));
   };
 }
 
@@ -23,6 +25,12 @@ export function removeSearchResuts() {
 
 export function fetchPopular() {
   return endpoints.getPopular()
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      console.log('Error in fetchPopular: ', error);
+    });
 }
 
 export default {

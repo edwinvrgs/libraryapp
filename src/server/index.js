@@ -9,13 +9,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from '../app/reducers/rootReducer';
+import initialState from '../app/initialState';
 import App from '../app/containers/App';
 import { renderToString } from 'react-dom/server'
-import moviesActions from '../app/actions/moviesActions';
 
 const app = express()
 const port = 3000
-const { fetchPopular } = moviesActions;
 
 console.log('Loading development server configs')
 const webpackConfig = require('../../webpack.config.js')
@@ -45,28 +44,15 @@ app.use(express.static('build'))
 app.use(handleRender);
 
 function handleRender(req, res) {
-  fetchPopular()
-    .then((resp) => {
-      const store = createStore(rootReducer, {
-        name: 'The TV Library',
-        movies: {
-          top20: resp,
-        },
-      }, compose(applyMiddleware(thunk)));
+  const store = createStore(rootReducer, initialState, compose(applyMiddleware(thunk)));
+  const html = renderToString(
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  );
 
-      const html = renderToString(
-        <Provider store={store}>
-          <App/>
-        </Provider>
-      );
-
-      const preloadedState = store.getState();
-      res.send(renderFullPage(html, preloadedState));
-    })
-    .catch((error) => {
-      assert.isNotOk(error,'Promise error');
-      done();
-    });
+  const preloadedState = store.getState();
+  res.send(renderFullPage(html, preloadedState));
 }
 function renderFullPage(html, preloadedState) {
     return `
@@ -74,6 +60,11 @@ function renderFullPage(html, preloadedState) {
         <html>
           <head>
             <title>Media Library App</title>
+            <meta name="description" content="Search movies info from this awesome app">
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1, shrink-to-fit=no"
+            >
           </head>
           <body>
              <div id="root">${html}</div>

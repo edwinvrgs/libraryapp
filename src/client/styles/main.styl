@@ -1,6 +1,138 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700');
 @import 'normalize.styl'
+@import 'fonts.css'
+
+figure
+  margin 0
 
 body
   font-size: 16px;
   font-family 'Ubuntu', sans-serif
+  background-color rgba(245, 245, 245, 0.75)
+
+.vertical-wrapper
+  display flex
+  flex-direction column
+  .vertical-wrapper-title
+    font-weight 400
+
+.main-contianer
+  display flex
+  flex-direction column
+  width calc(100% - 2em)
+  margin 0 1em
+  @media all and (min-width: 768px)
+    max-width 720px
+    margin 0 auto
+  @media all and (min-width: 992px)
+    max-width 960px
+  @media all and (min-width: 1200px)
+    max-width 1140px
+
+.top-movies-container, .search-results-container
+  display flex
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap wrap
+  width 100%
+  margin 0 auto
+
+.search-results-container
+  animation-name searchResults
+  overflow-y scroll
+  overflow-x auto
+  animation-duration 1s
+  animation-timing-function ease
+  max-height 400px
+  // transition all .45s cubic-bezier(.23,1,.32,1) 0ms
+
+.search-from
+  margin-top 2em
+  position relative
+  .search-input
+    width calc(100% - 2em)
+    padding 1em
+    background transparent
+    border none
+    border-bottom solid 1px rgba(224, 224, 224, 0.86)
+    font-size 24px
+    font-weight 400
+    &:focus
+      box-shadow none
+      outline none
+  .search-bar-icon, .search-spinner-icon, .close-search-icon
+    position absolute
+    right: 15px;
+    top: 30px;
+    font-size: 20px;
+    color rgba(156, 156, 156, 0.82)
+  .search-spinner-icon
+    animation: spin 1s linear infinite;
+  .close-search-icon
+    font-size: 30px
+    font-weight 300
+    &:hover
+      cursor pointer
+
+.movie-element
+  width 47%
+  display flex
+  justify-content center;
+  margin-bottom 1em
+  position relative
+  @media all and (min-width: 660px)
+    width 30%
+  @media all and (min-width: 768px)
+    width 22%
+  @media all and (min-width: 992px)
+    width 17%
+    &:hover
+      .movie-details-container
+        display flex
+        flex-direction column
+        animation-name movieDetails
+        animation-duration 1s
+        animation-timing-function ease
+  .movie-figure
+    width 100%
+    overflow hidden
+    img
+      width 100%
+  .movie-details-container
+    position absolute
+    width calc(100% - 2em)
+    background-color rgba(0, 0, 0, 0.31)
+    bottom 2px
+    display none
+    overflow: hidden;
+    padding 1em
+    color #FFF
+    .movie-details-title, .movie-details-date
+      font-weight 200
+    .movie-details-title
+      margin-bottom: 1em
+      &:hover
+        cursor pointer
+        text-decoration underline
+    .movie-details-date
+      font-size 14px
+      &:hover
+        cursor default
+
+@keyframes movieDetails
+  from
+    max-height 0
+  to
+    max-height 150px
+
+@keyframes searchResults
+  from
+    max-height 0
+  to
+    max-height 450px
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)

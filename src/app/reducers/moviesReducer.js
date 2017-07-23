@@ -14,7 +14,7 @@ export default function moviesReducer(state = initialState, { type, payload }) {
       });
     case A.EMPTY_SEARCH_RESULTS:
       return R.merge(state, {
-        searchResults: '',
+        searchResults: {},
       });
     default:
       return state;

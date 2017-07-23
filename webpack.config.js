@@ -6,6 +6,7 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
+    'webpack/hot/dev-server',
     'webpack-hot-middleware/client',
     './src/app/index.js'
   ],
@@ -48,6 +49,26 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url-loader'
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.ttf$/,
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+      },
+      {
+        test: /\.eot$/,
+        loader: "file-loader"
+      },
+      {
+        test: /\.svg$/,
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
       },
     ],
   },
