@@ -8,7 +8,7 @@
   "repository": "git@github.com:sampol18/libraryapp.git",
   "author": "Carlos Sampol <sampol.90@gmail.com>",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors",
+    "build": "webpack --config webpack-production.config.js --progress --colors",
     "start": "concurrently \"npm run build\" \"babel-node --presets es2015,stage-3 src/server/index.js \"",
     "start:dev": "nodemon src/server/index.js --exec babel-node --presets es2015,stage-3 --ignore components --progress --inline --colors"
   },
