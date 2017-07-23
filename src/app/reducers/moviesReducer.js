@@ -4,9 +4,9 @@ import R from 'ramda';
 
 export default function moviesReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case A.GET_TOP_20:
+    case A.GET_MOST_POPULAR:
       return R.merge(state, {
-        top20: payload,
+        mostPopular: payload,
       });
     case A.GET_SEARCH_RESULTS:
       return R.merge(state, {

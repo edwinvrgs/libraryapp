@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 import moviesActions from '../actions/moviesActions';
 import Movie from '../components/Movie';
+import SearchBar from '../components/SearchBar';
+import Paginator from '../components/Paginator';
 
 const { getMostPopular, searchMovies, removeSearchResuts } = moviesActions;
 const debouncedSearch = debounce((evt, func) => {
@@ -18,11 +20,12 @@ class App extends PureComponent {
       isSearching: false,
     }
     this.handleSearch = this.handleSearch.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.handleCloseSearch = this.handleCloseSearch.bind(this);
   }
 
   componentWillMount() {
-    this.props.getMostPopular();
+    this.props.getMostPopular(1);
   }
 
   handleCloseSearch(event) {
@@ -50,10 +53,15 @@ class App extends PureComponent {
     }
   }
 
-  renderTop20() {
-    const { top20 } = this.props;
-    if (top20.results) {
-      return top20.results.map((movie, index) => {
+  handlePageChange(event, page) {
+    event.preventDefault()
+    this.props.getMostPopular(page);
+  }
+
+  renderMostPopular() {
+    const { mostPopular } = this.props;
+    if (mostPopular.results) {
+      return mostPopular.results.map((movie, index) => {
         return <Movie key={movie.id} movie={movie} />
       });
     }
@@ -70,11 +78,7 @@ class App extends PureComponent {
         return null;
       });
     }
-    return (
-      <div>
-        No results found
-      </div>
-    )
+    return <div>No results found</div>
   }
 
   handleEnterButton(event) {
@@ -84,37 +88,18 @@ class App extends PureComponent {
   }
 
   render() {
-    const { searchResults, top20 } = this.props;
-    const { isSearching } = this.state;
+    const { searchResults, mostPopular } = this.props;
+    const { isSearching, searchTerm } = this.state;
     return (
       <div className='main-contianer'>
-        <form
-          onKeyPress={this.handleEnterButton}
-          className='search-from'
-        >
-          <input
-            type='text'
-            placeholder='Search'
-            onChange={this.handleSearch}
-            value={this.state.searchTerm}
-            className='search-input'
-          />
-          {isSearching ?
-            searchResults.results ?
-              (
-                <span
-                  onClick={this.handleCloseSearch}
-                  className='close-search-icon'
-                >
-                  x
-                </span>
-              ) : (
-                <span className='icon-spinner9 search-spinner-icon' />
-              ) : (
-              <span className='icon-search search-bar-icon' />
-            )
-          }
-        </form>
+        <SearchBar
+          keyPress={this.handleEnterButton}
+          search={this.handleSearch}
+          value={searchTerm}
+          searching={isSearching}
+          close={this.handleCloseSearch}
+          hasResults={searchResults}
+        />
         {searchResults && searchResults.results ? (
           <div className='vertical-wrapper'>
             <h2 className='vertical-wrapper-title'>
@@ -125,14 +110,15 @@ class App extends PureComponent {
             </section>
           </div>
         ) : null}
-        {top20 ?
+        {mostPopular ?
           (
             <div className='vertical-wrapper'>
               <h2 className='vertical-wrapper-title'>
                 Most popular movies
               </h2>
               <section className='top-movies-container'>
-                {this.renderTop20()}
+                {this.renderMostPopular()}
+                <Paginator currentPage={mostPopular.page} onChange={this.handlePageChange}/>
               </section>
             </div>
           ) : null
@@ -144,7 +130,7 @@ class App extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    top20: state.movies.top20,
+    mostPopular: state.movies.mostPopular,
     searchResults: state.movies.searchResults,
   };
 };
@@ -156,7 +142,7 @@ const mapDispatchToProps = {
 }
 
 App.propTypes = {
-  top20: Proptypes.object,
+  mostPopular: Proptypes.object,
   searchResults: Proptypes.object,
   searchMovies: Proptypes.func.isRequired,
   removeSearchResuts: Proptypes.func.isRequired,
@@ -164,7 +150,7 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  top20: {},
+  mostPopular: {},
   searchResults: {},
 }
 

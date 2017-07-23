@@ -1,7 +1,9 @@
 export default {
   name: 'The TV Library',
   movies: {
-    mostPopular: {},
+    mostPopular: {
+      page: 1,
+    },
     searchResults: {},
   },
 };

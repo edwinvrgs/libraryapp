@@ -1,10 +1,18 @@
 import endpoints from '../constants/endpoints';
 import * as A from '../constants';
 
-export function getMostPopular() {
+export function getMostPopular(page) {
   return dispatch => {
-    endpoints.getPopular()
-      .then((res) => dispatch({ type: A.GET_TOP_20, payload: res }))
+    endpoints.getPopular(page)
+      .then((res) => dispatch({ type: A.GET_MOST_POPULAR, payload: res }))
+      .catch((err) => console.log('getMostPopular error: ', err));
+  };
+}
+
+export function getPopularByYear(year) {
+  return dispatch => {
+    endpoints.getPopularByYear(year)
+      .then((res) => dispatch({ type: A.GET_MOST_POPULAR, payload: res }))
       .catch((err) => console.log('getMostPopular error: ', err));
   };
 }
