@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700')
 @import 'normalize.styl'
 @import 'fonts.css'
 
@@ -6,7 +6,7 @@ figure
   margin 0
 
 body
-  font-size: 16px;
+  font-size 16px
   font-family 'Ubuntu', sans-serif
   background-color rgba(245, 245, 245, 0.75)
 
@@ -33,8 +33,8 @@ body
 
 .top-movies-container, .search-results-container
   display flex
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content space-between
+  align-items flex-start
   flex-wrap wrap
   width 100%
   margin 0 auto
@@ -42,7 +42,7 @@ body
 .search-results-container
   animation-name searchResults
   overflow-y auto
-  overflow-x hidden
+  overflow-x aut
   animation-duration 1s
   animation-timing-function ease
   max-height 400px
@@ -64,12 +64,12 @@ body
       outline none
   .search-bar-icon, .search-spinner-icon, .close-search-icon
     position absolute
-    right: 15px;
-    top: 30px;
-    font-size: 20px;
+    right 15px
+    top 30px
+    font-size 20px
     color rgba(156, 156, 156, 0.82)
   .search-spinner-icon
-    animation: spin 1s linear infinite;
+    animation spin 1s linear infinite
   .close-search-icon
     font-size: 30px
     font-weight 300
@@ -82,7 +82,7 @@ body
   justify-content flex-end
   align-items center
   .paginator-element
-    font-weight: 300
+    font-weight 300
     margin 0 10px
     display flex
     align-items center
@@ -90,21 +90,23 @@ body
     &:hover
       cursor pointer
   .paginator-element.current
-    font-weight: 400
+    font-weight 400
     color rgb(156, 156, 156)
 
 .movie-element
   width 47%
   display flex
-  justify-content center;
+  justify-content center
   margin-bottom 1em
   position relative
+  flex-direction column
   @media all and (min-width: 660px)
     width 30%
   @media all and (min-width: 768px)
     width 22%
-  @media all and (min-width: 992px)
+  @media all and (min-width: 1024px)
     width 17%
+  @media all and (min-width: 1200px)
     &:hover
       .movie-details-container
         display flex
@@ -123,13 +125,13 @@ body
     background-color rgba(0, 0, 0, 0.31)
     bottom 2px
     display none
-    overflow: hidden;
+    overflow hidden
     padding 1em
     color #FFF
     .movie-details-title, .movie-details-date
       font-weight 200
     .movie-details-title
-      margin-bottom: 1em
+      margin-bottom 1em
       &:hover
         cursor pointer
         text-decoration underline
@@ -137,6 +139,118 @@ body
       font-size 14px
       &:hover
         cursor default
+
+.movie-more-details-loader
+  display none
+  @media all and (min-width: 1200px)
+    display flex
+    width 100%
+    min-height 200px
+    justify-content center
+    align-items center
+    .icon-spinner9
+      animation spin 1s linear infinite
+      font-size 50px
+      color rgba(156, 156, 156, 0.82)
+
+.top-movies-container, .search-results-container
+  .movie-element
+    @media all and (min-width: 1200px)
+      &:nth-child(1n+0)
+        .movie-more-details-wrapper
+          left 0
+      &:nth-child(4n+0)
+        .movie-more-details-wrapper
+          right 0
+          left inherit
+          .movie-more-details
+            flex-direction row-reverse
+      &:nth-child(5n+0)
+        .movie-more-details-wrapper
+          right 0
+          left inherit
+          .movie-more-details
+            flex-direction row-reverse
+
+.movie-more-details-wrapper
+  position relative
+  @media all and (min-width: 1200px)
+    position absolute
+    background-color #FFF
+    border-radius 5px
+    box-shadow 0 4px 20px 0 hsla(0,0%,87%,.5)
+    animation-name flipAndZoom
+    animation-duration .5s
+    width 100%
+    animation-timing-function ease
+    animation-fill-mode forwards
+    z-index 1
+    overflow hidden
+    display flex
+    top 0
+    width 500px
+    height 100%
+
+  .movie-more-details
+    display flex
+    justify-content space-around
+    align-items flex-start
+    width 100%
+    flex-direction column
+    @media all and (min-width: 1200px)
+      flex-direction row
+    .movie-more-details-left
+      width 100%
+      @media all and (min-width: 1200px)
+        width 40%
+      .movie-figure
+        display none
+        @media all and (min-width: 1200px)
+          display block
+    .movie-more-details-right
+      display flex
+      flex-direction column
+      width calc(100% - 1em)
+      padding 0 .5em
+      @media all and (min-width: 1200px)
+        width calc(60% - 1em)
+      .movie-more-details-title
+        font-weight 400
+      .movie-more-details-release
+        font-weight 300
+        font-size 15px
+      .movie-more-details-web
+        font-weight 300
+        color rgba(156, 156, 156, 0.82)
+        text-decoration underline
+        margin-bottom 10px
+      .movie-more-details-overview
+        font-weight 300
+        font-size 14px
+        text-align justify
+        max-height 110px
+        overflow auto
+
+.movie-scroller-spinner
+  width 100%
+  display flex
+  justify-content center
+  .scroller-spinner
+    font-size 30px
+    color rgba(156, 156, 156, 0.82)
+    animation spin 1s linear infinite
+
+
+@keyframes flipAndZoom
+  from
+    max-width 0
+    max-height 0
+    scale(0)
+  to
+    max-width 500px
+    max-height 350px
+    scale(2)
+
 
 @keyframes movieDetails
   from
@@ -152,6 +266,6 @@ body
 
 @keyframes spin
   0%
-    transform: rotate(0deg)
+    transform rotate(0deg)
   100%
-    transform: rotate(360deg)
+    transform rotate(360deg)

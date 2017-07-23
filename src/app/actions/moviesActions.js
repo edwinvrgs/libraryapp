@@ -9,6 +9,14 @@ export function getMostPopular(page) {
   };
 }
 
+export function fetchScrolled(page) {
+  return dispatch => {
+    endpoints.getPopular(page)
+      .then((res) => dispatch({ type: A.FETCH_MOST_POPULAR, payload: res }))
+      .catch((err) => console.log('getMostPopular error: ', err));
+  };
+}
+
 export function getPopularByYear(year) {
   return dispatch => {
     endpoints.getPopularByYear(year)
@@ -22,6 +30,14 @@ export function searchMovies(params) {
     endpoints.searchMovies(params)
       .then((res) => dispatch({ type: A.GET_SEARCH_RESULTS, payload: res }))
       .catch((err) => console.log('searchMovies error: ', err));
+  };
+}
+
+export function getMovie(id) {
+  return dispatch => {
+    endpoints.getMovie(id)
+      .then((res) => dispatch({ type: A.GET_MOVIE, payload: res }))
+      .catch((err) => console.log('getMovie error: ', err));
   };
 }
 
@@ -46,4 +62,6 @@ export default {
   searchMovies,
   getMostPopular,
   removeSearchResuts,
+  getMovie,
+  fetchScrolled,
 };

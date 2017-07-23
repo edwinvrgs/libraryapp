@@ -5,5 +5,6 @@ export default {
       page: 1,
     },
     searchResults: {},
+    movieInfo: {},
   },
 };

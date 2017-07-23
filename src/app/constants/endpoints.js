@@ -1,9 +1,9 @@
 import fetch from '../services/fetch';
 
 const endpoints = {
-  searchMovies: '/search/movie',
+  searchMovies: '/search/multi',
   searchPopular: '/discover/movie',
-  getMovie: '/movie',
+  getMovie: '/movie/',
 };
 
 function searchMovies(query) {
@@ -51,7 +51,7 @@ function getPopularByYear(year) {
 }
 
 function getMovie(id) {
-  return fetch.get(endpoints.searchPopular + id)
+  return fetch.get(endpoints.getMovie + id)
   .then((res) => {
     return res.data;
   })

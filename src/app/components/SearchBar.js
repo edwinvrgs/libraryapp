@@ -9,7 +9,7 @@ const SearchBar = ({ keyPress, search, value, searching, close, hasResults }) =>
     >
       <input
         type='text'
-        placeholder='Search'
+        placeholder='Search any Movie...'
         onChange={search}
         value={value}
         className='search-input'
